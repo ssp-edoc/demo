@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forms</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setLoaderVisibility(true);
+
+            viewer
+                .init(initOptions)
+                .session(sessionOptions)
+                .getForms()
+                    .then(forms => {
+                        setLoaderVisibility(false);
+
+                        const createFormLink = (form) => {
+                            var fragment = document.createDocumentFragment();
+                            const formLink = document.createElement("a");
+                            formLink.setAttribute("href", `form.html?formId=${form.formId}`);
+                            formLink.text = `${form.name}`;
+
+                            fragment.appendChild(formLink);
+                            const br = document.createElement("br");
+                            fragment.appendChild(br);
+                            return fragment;
+                        }
+
+                        const formsElement = document.getElementById("forms");
+
+                        if(forms) {
+                            forms.forEach(function(form) {
+                                formsElement.appendChild(createFormLink(form));
+                            });
+                        } else {
+                            formsElement.appendChild(document.createTextNode("No forms"));
+                        }
+                    }).catch((error) => {
+                        alert(error.message);
+                    }).finally(() => {
+                        setLoaderVisibility(false);
+                    });
+        });
+    </script>    
+
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">Start</a>
+            </li>            
+            <li>
+                <a href="cases.html">Cases</a>
+            </li>
+            <li id="logIn">
+                <a href="#" onclick="logIn()">Log in</a>
+            </li>
+            <li id="logOut">
+                <a href="#" onclick="logOut()">Log out</a>
+            </li>            
+        </ul>
+    </nav>
+
+    <h1>Forms</h1>
+    <div id="forms"></div>
+    <div id="loader" class="loader"></div>
+
+    <script src="http://localhost/viewer-js/prod/viewer.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

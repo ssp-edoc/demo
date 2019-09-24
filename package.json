@@ -1,0 +1,14 @@
+{
+  "name": "edoc-demo",
+  "version": "0.0.1",
+  "description": "Demonstrates edoc-viewer.js core concepts.",
+  "main": "script.js",
+  "scripts": {
+    "start": "http-server ."
+  },
+  "author": "sukchr",
+  "license": "SEE LICENSE IN license.txt",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}

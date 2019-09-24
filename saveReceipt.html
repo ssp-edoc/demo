@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">    
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const refId = viewer.util.getQuery("refId");
+            document.getElementById("receipt").innerHTML = 
+            `
+                <p>RefId to resume saved form: ${refId}</p>
+                <a href='form.html?refId=${refId}'>Resume form</a>
+            `;
+        });
+    </script>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">Start</a>
+            </li>
+            <li>
+                <a href="forms.html">Forms</a>
+            </li>
+            <li>
+                <a href="cases.html">Cases</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Save receipt</h1>
+    <div id="receipt"></div>
+
+    <script src="http://localhost/viewer-js/prod/viewer.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setLoaderVisibility(true);
+
+            viewer
+                .init(initOptions)
+                .session(sessionOptions)
+                .form({
+                    divId: "viewer",
+                    formId: function() {
+                        return viewer.util.getQuery("formId");
+                    },
+                    refId: function() {
+                        return viewer.util.getQuery("refId");
+                    },
+                    onStarting: function() {
+                        console.log("viewer.onStarting()")
+                    },
+                    onSaving: function(proceed) {
+                        proceed();
+                    },
+                    onSaved: function(proceed) {
+                        proceed();
+                    },
+                    onAborting: function(proceed) {
+                        proceed(); //be om bekreftelse før proceed() blir kalt. 
+                    },
+                    onAborted: function() {
+                        window.location = "index.html";
+                    },
+                    onSubmitted: function(receipt) {
+                        window.location = "submitReceipt.html?refId=" + receipt.refId;
+                    },
+                    onAuthenticationRequired: function(info) {
+                        viewer.logIn({securityLevel: info.requiredSecurityLevel});
+                        //om ønskelig, kan URL for autentisering hentes via viewer.getLogInUrl().
+                    },
+                }).catch((error) => {
+                    alert(error);
+                }).finally(() => {
+                    setLoaderVisibility(false);
+                });
+        });
+    </script>
+
+    <div id="viewer"></div>
+
+    <div id="loader" class="loader"></div>
+
+    <script src="http://localhost/viewer-js/prod/viewer.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

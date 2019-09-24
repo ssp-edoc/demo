@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Cases</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            viewer
+                .init(initOptions)
+                .session(sessionOptions);
+
+            const renderCases = () => 
+                setLoaderVisibility(true);
+
+                viewer.getCases().then(cases => {
+                    setLoaderVisibility(false);
+                    document.getElementById("content").style.display = "block";
+
+                    const createCaseLink = (c, isSaved) => {
+                        var fragment = document.createElement("div");
+                        fragment.setAttribute("id", c.refId);
+
+                        const caseLink = document.createElement("a");
+                        if(isSaved) {
+                            caseLink.setAttribute("href", `form.html?refId=${c.refId}`);
+                        }
+                        caseLink.text = `${c.name}`;
+                        fragment.appendChild(caseLink);
+
+                        const deleteLink = document.createElement("a");
+                        deleteLink.setAttribute("href", "#");
+                        deleteLink.text = " delete";
+                        deleteLink.onclick = function(event) {
+                            viewer.deleteCase(c.refId)
+                            .then(() => {
+                                document.getElementById(c.refId).remove();
+                            }).catch((error) => {
+                                alert(JSON.stringify(error));
+                            });
+                        };
+                        fragment.appendChild(deleteLink);
+
+                        const br = document.createElement("br");
+                        fragment.appendChild(br);
+
+                        return fragment;
+                    }
+
+                    const savedCasesElement = document.getElementById("savedCases");
+                    savedCasesElement.innerHTML = "";
+
+                    if(cases.saved) {
+                        cases.saved.forEach(function(c) {
+                            savedCasesElement.appendChild(createCaseLink(c, true));
+                        });
+                    } else {
+                        savedCasesElement.appendChild(document.createTextNode("No saved cases"));
+                    }
+
+                    const submittedCasesElement = document.getElementById("submittedCases");
+                    submittedCasesElement.innerHTML = "";
+
+                    if(cases.submitted) {
+                        cases.submitted.forEach( (c) => {
+                            submittedCasesElement.appendChild(createCaseLink(c, false));
+                        });
+                    } else {
+                        submittedCasesElement.appendChild(document.createTextNode("No submitted cases"));
+                    }
+                }).catch((error) => {
+                    alert(JSON.stringify(error));
+                }).finally(() => {
+                    setLoaderVisibility(false);
+                });
+
+            renderCases();
+        });
+    </script>    
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">Start</a>
+            </li>
+            <li>
+                <a href="forms.html">Forms</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Cases</h1>
+    <div id="loader" class="loader"></div>
+
+    <div id="content" style="display: none">
+        <h2>Saved cases</h1>
+        <div id="savedCases"></div>
+
+        <h2>Submitted cases</h1>
+        <div id="submittedCases"></div>
+    </div>
+
+    <script src="http://localhost/viewer-js/prod/viewer.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

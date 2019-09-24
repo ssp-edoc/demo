@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">    
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const refId = viewer.util.getQuery("refId");
+
+            viewer
+                .init(initOptions)
+                .session(sessionOptions)
+                .getCaseInfo(refId)
+                    .then(info => {
+                        document.getElementById("receipt").innerHTML = 
+                        `
+                            refId: ${info.refId} <br/>
+                            name: ${info.name} <br/>
+                            updatedOn: ${info.updatedOn} <br/>
+                        `;
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+            });
+    </script>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html">Start</a>
+            </li>
+            <li>
+                <a href="forms.html">Forms</a>
+            </li>
+            <li>
+                <a href="cases.html">Cases</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Submit receipt</h1>
+    <div id="receipt"></div>
+
+    <script src="http://localhost/viewer-js/prod/viewer.min.js"></script>
+    <script src="script.js"></script>    
+</body>
+</html>
