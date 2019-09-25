@@ -7,8 +7,8 @@ function setLoaderVisibility (isVisible) {
 };
 
 const initOptions = {
-    apiUrl: "http://localhost/api/",
-    customerId: "uoneorg",
+    apiUrl: "https://api.preprod.skjema.no/",
+    customerId: "ummo",
     hide: {
         title: false,
         save: false,
