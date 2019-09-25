@@ -24,7 +24,6 @@ const sessionOptions = {
     onAuthenticated: (getUser) => {
         getUser() //if you need to get the user's id, invoke getUser.
             .then((user) => {
-                setUser(user.id)
                 alert(`You are logged in as ${user.id}!`);
             });
     },
@@ -38,7 +37,6 @@ const sessionOptions = {
         }
     },
     onIdleTimeout: () => {
-        removeUser();
         alert("Your session has ended.");
         window.location = "index.html";
     },
@@ -55,20 +53,4 @@ function logOut() {
             alert("Your session has ended.");
             window.location = "index.html";            
         });
-}
-
-function setUser(userId) {
-    window.sessionStorage.setItem("userId", userId);
-}
-
-function getUser() {
-    return window.sessionStorage.getItem("userId");
-}
-
-function removeUser() {
-    window.sessionStorage.setItem("userId", null);
-}
-
-function isLoggedIn() {
-    return getUser();
 }
