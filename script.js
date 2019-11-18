@@ -37,8 +37,8 @@ const sessionOptions = {
         }
     },
     onIdleTimeout: () => {
-        alert("Your session has ended.");
-        window.location = "index.html";
+        alert("Your session has ended (idle-timeout).");
+        viewer.logOut("http://localhost/demo/index.html"); //replace with URL of your choice.
     },
 }
 
@@ -48,9 +48,6 @@ function logIn(securityLevel) {
 
 function logOut() {
     removeUser();
-    viewer.logOut()
-        .then(() => {
-            alert("Your session has ended.");
-            window.location = "index.html";            
-        });
+    alert("Your session has ended (explicit logout).");
+    viewer.logOut("http://localhost/demo/index.html"); //replace with URL of your choice.
 }
