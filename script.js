@@ -18,9 +18,9 @@ const initOptions = {
 }
 
 const sessionOptions = {
-    singleLogOut: false, 
-    idleTimeoutMinutes: 20,
-    warningTimeoutMinutes: 3,
+    singleLogOut: true, 
+    idleTimeoutMinutes: 10,
+    warningTimeoutMinutes: 5,
     onAuthenticated: (getUser) => {
         getUser() //if you need to get the user's id, invoke getUser.
             .then((user) => {

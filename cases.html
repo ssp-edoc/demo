@@ -26,6 +26,11 @@
                         const caseLink = document.createElement("a");
                         if(isSaved) {
                             caseLink.setAttribute("href", `form.html?refId=${c.refId}`);
+                        } else { //isSubmitted
+                            caseLink.setAttribute("href", "#");
+                            caseLink.onclick = function(event) {
+                                viewer.getPdf(c.refId);
+                            };
                         }
                         caseLink.text = `${c.name}`;
                         fragment.appendChild(caseLink);
