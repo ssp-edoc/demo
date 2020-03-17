@@ -19,11 +19,18 @@
                     onStarting: function() {
                         console.log("viewer.onStarting()")
                     },
+                    onStarted: function({template, model, customer}) {
+                        let containsPayableFields = model.getMeta("containsPayableFields");
+                        let netsJsUrl = customer.nets.jsUrl;
+                        console.log("viewer.onStarted()");
+                    },
                     onSaving: function(proceed) {
                         proceed();
+                        console.log("viewer.onSaving()");
                     },
-                    onSaved: function(proceed) {
-                        proceed();
+                    onSaved: function(saveInfo) {
+                        console.log("viewer.onSaved()");
+                        window.location = "cases.html";
                     },
                     onAborting: function(proceed) {
                         proceed(); //be om bekreftelse før proceed() blir kalt. 
@@ -36,7 +43,7 @@
                     },
                     onAuthenticationRequired: function(info) {
                         viewer.logIn({securityLevel: info.requiredSecurityLevel});
-                        //om ønskelig, kan URL for autentisering hentes via viewer.getLogInUrl().
+                        //om ønskelig, kan URL for autentisering hentes via viewer.getLogInUrl({securityLevel: info.requiredSecurityLevel}).
                     },
                 }).catch((error) => {
                     alert(error);
