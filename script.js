@@ -7,8 +7,8 @@ function setLoaderVisibility (isVisible) {
 };
 
 const initOptions = {
-    apiUrl: "https://api.preprod.skjema.no/",
-    customerId: "ummo",
+    apiUrl: "http://localhost/api",
+    customerId: "chris",
     hide: {
         title: false,
         save: false,
@@ -27,16 +27,23 @@ const sessionOptions = {
                 alert(`You are logged in as ${user.id}!`);
             });
     },
-    onIdleTimeoutWarning: (extendSession, endSession) => {
-        const message = "Your session is about to end. Extend session ('OK') or end session ('cancel')?";
+    // onIdleTimeoutWarning: (extendSession, endSession) => {
+    //     const message = "Your session is about to end. Extend session ('OK') or end session ('cancel')?";
         
-        if(confirm(message)) {
-            extendSession();
-        } else {
-            endSession();
-        }
-    },
-    onIdleTimeout: () => {
+    //     if(confirm(message)) {
+    //         extendSession();
+    //     } else {
+    //         endSession();
+    //     }
+    // },
+     onIdleTimeout: async () => {
+        const user = await getUser();
+
+        if(user) {
+            alert("logged in as " + user.id);
+        } else
+            alert("not logged in");
+
         alert("Your session has ended (idle-timeout).");
         viewer.logOut("http://localhost/demo/index.html"); //replace with URL of your choice.
     },
